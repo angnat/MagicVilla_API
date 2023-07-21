@@ -13,12 +13,13 @@ namespace MagicVilla_VillaAPI.Repository
         {
             _db = db;
         }
-        public async Task<Villa> UpdateAsync(Villa entity)
+        public async Task<VillaNumber> UpdateAsync(VillaNumber entity)
         {
             entity.UpdatedDate = DateTime.Now;
-            _db.Villas.Update(entity);
+            _db.VillaNumber.Update(entity);
             await _db.SaveChangesAsync();
             return entity;
         }
+       
     }
 }
