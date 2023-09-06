@@ -8,6 +8,7 @@ namespace MagicVilla_Web.Models.Dto
         public string VillaNo { get; set; }
         [Required]
         public int VillaID { get; set; }
-        public string SpecialDetails { get; set; }        
+        public string SpecialDetails { get; set; }      
+        public VillaDto Villa { get; set; }
     }
 }
