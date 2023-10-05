@@ -14,6 +14,7 @@ namespace MagicVilla_VillaAPI.Controllers
         public UsersController(IUserRepository userRepo)
         {
             _userRepo = userRepo;
+            _response = new();
         }
 
         [HttpPost("login")]
@@ -27,7 +28,10 @@ namespace MagicVilla_VillaAPI.Controllers
                 _response.ErrorsMessage.Add("Username or password is invalid");
                 return BadRequest(_response);
             }
-            return View();
+            _response.StatusCode = System.Net.HttpStatusCode.OK;
+            _response.IsSuccess = true;
+            _response.Result = loginResponse;
+            return Ok(_response);
         }
 
         [HttpPost("register")]
