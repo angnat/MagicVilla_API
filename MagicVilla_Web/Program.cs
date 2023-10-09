@@ -1,7 +1,6 @@
 using MagicVilla_Web;
 using MagicVilla_Web.Services.IServices;
 using MagicVilla_Web.Services;
-using MagicVilla_Web.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +13,9 @@ builder.Services.AddScoped<IVillaService, VillaService>();
 
 builder.Services.AddHttpClient<IVillaNumberService, VillaNumberService>();
 builder.Services.AddScoped<IVillaNumberService, VillaNumberService>();
+
+builder.Services.AddHttpClient<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 
 var app = builder.Build();
