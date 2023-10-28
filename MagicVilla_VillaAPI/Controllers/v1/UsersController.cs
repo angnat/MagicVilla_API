@@ -3,10 +3,11 @@ using MagicVilla_VillaAPI.Models.Dto;
 using MagicVilla_VillaAPI.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MagicVilla_VillaAPI.Controllers
+namespace MagicVilla_VillaAPI.Controllers.v1
 {
-    [Route("api/UsersAuth")]
+    [Route("api/v{version:apiVersion}/UsersAuth")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class UsersController : Controller
     {
         private readonly IUserRepository _userRepo;
@@ -22,7 +23,7 @@ namespace MagicVilla_VillaAPI.Controllers
         {
             var loginResponse = await _userRepo.Login(model);
             if (loginResponse.User == null || string.IsNullOrEmpty(loginResponse.Token))
-            {              
+            {
                 _response.StatusCode = System.Net.HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
                 _response.ErrorsMessage.Add("Username or password is invalid");
@@ -38,7 +39,7 @@ namespace MagicVilla_VillaAPI.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterationRequestDTO model)
         {
             bool ifUserNameUnique = _userRepo.IsUniqueUser(model.UserName);
-            if(!ifUserNameUnique)
+            if (!ifUserNameUnique)
             {
                 _response.StatusCode = System.Net.HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
@@ -47,7 +48,7 @@ namespace MagicVilla_VillaAPI.Controllers
             }
 
             var user = await _userRepo.Register(model);
-            if(user == null)
+            if (user == null)
             {
                 _response.StatusCode = System.Net.HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
@@ -55,7 +56,7 @@ namespace MagicVilla_VillaAPI.Controllers
                 return BadRequest(_response);
             }
             _response.StatusCode = System.Net.HttpStatusCode.OK;
-            _response.IsSuccess = true;          
+            _response.IsSuccess = true;
             return Ok(_response);
         }
     }

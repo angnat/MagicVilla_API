@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace MagicVilla_VillaAPI.Controllers
+namespace MagicVilla_VillaAPI.Controllers.v1
 {
-    [Route("api/VillaAPI")]
+    [Route("api/v{version:apiVersion}/VillaAPI")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class VillaAPIController : ControllerBase
     {
         // private readonly ApplicationDbContext _db;
@@ -28,23 +29,23 @@ namespace MagicVilla_VillaAPI.Controllers
         {
             _dbVilla = dbVilla;
             _mapper = mapper;
-            this._response = new();
+            _response = new();
         }
 
-        [HttpGet]        
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<APIResponse>> GetVillas()
         {
             //_logger.Log("Getting All Villa","");
             //IEnumerable<Villa> villaList = await _db.Villas.ToListAsync();
             try
-            {           
-            IEnumerable<Villa> villaList = await _dbVilla.GetAllAsync();
-            _response.Result = _mapper.Map<List<VillaDto>>(villaList);
-            _response.StatusCode = System.Net.HttpStatusCode.OK;
-            return Ok(_response);
+            {
+                IEnumerable<Villa> villaList = await _dbVilla.GetAllAsync();
+                _response.Result = _mapper.Map<List<VillaDto>>(villaList);
+                _response.StatusCode = System.Net.HttpStatusCode.OK;
+                return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.ErrorsMessage = new List<string>() { ex.ToString() };
