@@ -83,8 +83,8 @@ namespace MagicVilla_VillaAPI.Repository
             {
                 UserName = registerationRequestDTO.UserName,
                 Email = registerationRequestDTO.UserName,
-                Name = registerationRequestDTO.Name,
                 NormalizedEmail = registerationRequestDTO.UserName.ToUpper(),
+                Name = registerationRequestDTO.Name
             };
 
             try
